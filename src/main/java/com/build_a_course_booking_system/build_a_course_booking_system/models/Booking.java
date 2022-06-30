@@ -59,4 +59,12 @@ public class Booking {
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
     }
+
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
 }
