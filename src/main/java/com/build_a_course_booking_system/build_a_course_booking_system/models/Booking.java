@@ -1,9 +1,13 @@
 package com.build_a_course_booking_system.build_a_course_booking_system.models;
 
 import com.build_a_course_booking_system.build_a_course_booking_system.repositories.CustomerRepository;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="bookings")
@@ -14,19 +18,26 @@ public class Booking {
     private Long id;
     @Column(name="date")
     private String date;
-    @Column(name="customers")
-    private ArrayList<Customer> customers;
-    @Column(name="courses")
-    private ArrayList<Course> courses;
 
-    public Booking(String date) {
-        this.date = date;
-        this.customers = new ArrayList<>();
-        this.courses = new ArrayList<>();
-    }
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+//    @JsonBackReference
+    @JsonIgnoreProperties({"bookings"})
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name= "course_id", nullable = false)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+//    @JsonBackReference
+    @JsonIgnoreProperties({"bookings"})
+    private Course course;
+
+
 
     public Booking() {
     }
+
 
     public Long getId() {
         return id;
@@ -44,27 +55,20 @@ public class Booking {
         this.date = date;
     }
 
-    public ArrayList<Customer> getCustomers() {
-        return customers;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomers(ArrayList<Customer> customers) {
-        this.customers = customers;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public ArrayList<Course> getCourses() {
-        return courses;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourses(ArrayList<Course> courses) {
-        this.courses = courses;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public void addCustomer(Customer customer) {
-        customers.add(customer);
-    }
-
-    public void addCourse(Course course) {
-        courses.add(course);
-    }
 }

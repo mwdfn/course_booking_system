@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @SpringBootTest
 class BuildACourseBookingSystemApplicationTests {
 
@@ -32,10 +34,11 @@ class BuildACourseBookingSystemApplicationTests {
 		Course course1 = new Course("Fashion Design", "Edinburgh", 5);
 		courseRepository.save(course1);
 
-		Booking booking1 = new Booking("2022/11/28");
-		booking1.addCustomer(customer1);
-		booking1.addCourse(course1);
+		Booking booking1 = new Booking();
+		booking1.setDate("2022/11/20");
+		booking1.setCustomer(customer1);
+		booking1.setCourse(course1);
 		bookingRepository.save(booking1);
+		assertTrue(booking1.getId()!=null);
 	}
-
 }
